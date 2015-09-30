@@ -14,6 +14,17 @@ function flora_cities_help($path, $arg){
 	}
 }
 /**
+ * Implements hook_permission().
+ */
+function flora_cities_permission() {
+  return array(
+    'administer flora_cities' => array(
+      'title' => t('Administer flora_cities Background'),
+      'description' => t('Perform administrative tasks on flora_cities functionality'),
+    ),
+  );
+}
+/**
  * Implements hook_menu().
  */
 function flora_cities_menu() {
@@ -23,14 +34,14 @@ function flora_cities_menu() {
   $items['admin/config/flora_cities'] = array(
     'title' => 'Florist Cities list',
     'description' => 'Administer Florist Cities list',
-    'access arguments' => array('administer Florist Cities list'),
+    'access arguments' => array('administer flora_cities'),
   );
 
   // Admin configuration - Settings.
   $items['admin/config/flora_cities/manage'] = array(
     'title' => 'Florist Cities list settings',
     'description' => 'Manage Florist Cities list settings and configurations.',
-    'access arguments' => array('administer Florist Cities list'),
+    'access arguments' => array('administer flora_cities'), // same as before
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flora_cities_admin_settings_form'),
   );
