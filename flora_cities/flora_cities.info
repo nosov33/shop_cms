@@ -1,0 +1,6 @@
+name = Turkey Flora Cities Module
+description = Implements Cities List To Custom Order Page.  
+package = Turkey Flora
+version = 7.x-1.0
+author = Ivan Nosov
+core = 7.x

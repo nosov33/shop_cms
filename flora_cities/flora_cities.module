@@ -1,0 +1,91 @@
+<?php
+/**
+* Implements hook_help() to the module.
+* 
+*/
+function flora_cities_help($path, $arg){
+	switch ($path){
+		case 'admin/help#flora_cities':{
+			$ret_val = '<h3>' . t('About Florist Cities list') . '</h3>';
+			$ret_val = '<p>' . t('Using this module you can add any cities in citty list of database with Russian & English names') . '</p>';
+			return $ret_val;
+			break;
+		}
+	}
+}
+/**
+ * Implements hook_menu().
+ */
+function flora_cities_menu() {
+  $items = array();
+
+  // Admin configuration group.
+  $items['admin/config/flora_cities'] = array(
+    'title' => 'Florist Cities list',
+    'description' => 'Administer Florist Cities list',
+    'access arguments' => array('administer Florist Cities list'),
+  );
+
+  // Admin configuration - Settings.
+  $items['admin/config/flora_cities/manage'] = array(
+    'title' => 'Florist Cities list settings',
+    'description' => 'Manage Florist Cities list settings and configurations.',
+    'access arguments' => array('administer Florist Cities list'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('flora_cities_admin_settings_form'),
+  );
+
+  return $items;
+}
+/**
+ * Implements hook_form().
+ */
+function flora_cities_admin_settings_form($node, &$form_state) {
+  $form = array();
+
+  $form['overview'] = array(
+    '#markup' => t('This interface allows administrators to manage general YouTube Video Background Settings'),
+    '#prefix' => '<p>',
+    '#suffix' => '</p>',
+  );
+  $form['flora_cities_eng'] = array(
+    '#title' => t('English City Name'),
+    '#description' => t('Add here city name'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('flora_cities_eng', 'Add any city here'),
+    '#required' => TRUE,
+  );
+  
+  $form['flora_cities_rus'] = array(
+    '#title' => t('Russian City Name'),
+    '#description' => t('Add here Russian city name'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('flora_cities_rus', 'Add any city here'),
+    '#required' => TRUE,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+    return $form;
+}
+
+/**
+ * Process a validated admin setting submission.
+ */
+function flora_cities_admin_settings_form_submit($form, &$form_state) {
+  // Rebuild the form.
+  $form_state['rebuild'] = TRUE;
+
+  // Save setting variables. NO DRUPAL WAY!!!!!
+		
+	$id = db_insert("cities")
+    ->fields(array(
+        'city_ru' => $form_state['values']['flora_cities_rus'],
+        'city_en' => $form_state['values']['flora_cities_eng']
+    ))
+    ->execute(); 
+
+  // Notify user.
+  drupal_set_message(t('Your Cities List settings has been saved.'));
+}
