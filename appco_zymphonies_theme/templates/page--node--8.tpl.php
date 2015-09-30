@@ -132,14 +132,6 @@
 
           <section id="post-content" role="main">
 
-            <?php print render($title_prefix); ?>
-            <?php if ($title): ?><h1 class="page-title"><?php print $title; ?></h1><?php endif; ?>
-            <?php if (theme_get_setting('breadcrumbs', 'appco_zymphonies_theme')): ?>
-              <div id="breadcrumbs"> <?php if ($breadcrumb): print $breadcrumb; endif;?> </div>
-            <?php endif; ?>
-
-            <?php print render($title_suffix); ?>
-
             <?php if (!empty($tabs['#primary'])): ?>
               <div class="tabs-wrapper"><?php print render($tabs); ?></div>
             <?php endif; ?>
@@ -149,7 +141,61 @@
             <?php if ($action_links): ?>
               <ul class="action-links"><?php print render($action_links); ?></ul>
             <?php endif; ?>
+		
+<?php
+	$toplamfiyat = $_POST['price'];
+	$img = $_POST['image'];
+?>	
+<img src="http://turkeyflora.ru/sites/default/files/<?php echo $img; ?>" style="float: left; width: 120px; height: auto;" />
+<h2>Price: <?php echo $toplamfiyat; ?> TL</h2>		
+<form action="http://turkeyflora.ru/payment.html" method="POST">
+	<label>Recepient Information</label>
+	<input type="text" placeholder="Enter Receipent Name" name="rec_name" />
+	<input type="text" placeholder="Enter Receipent Phone" name="rec_phone" />
+	<label>Choose City:</label>
+<?php
+	$db_host = 'localhost'; 
+	$db_username = 'rarmaga_new';
+	$dbUser = 'rarmaga_new';
+	$db_password = 'karaduga2013';
+	$db_name = 'rarmaga_new';
+	$db_table_to_show = 'cities';
+	//connection to the database
 
+ 	// соединяемся с сервером базы данных
+    $connect_to_db = mysql_connect($db_host, $db_username, $db_password)
+    or die("Could not connect: " . mysql_error());
+
+    // подключаемся к базе данных
+    mysql_select_db($db_name, $connect_to_db)
+    or die("Could not select DB: " . mysql_error());
+
+	// выбираем все значения из таблицы "student"
+    $qr_result = mysql_query("select * from " . $db_table_to_show)
+    or die(mysql_error());
+
+	echo "<select class='form-norm' name='city'>";
+  while($data = mysql_fetch_array($qr_result)){ 
+    echo '<option name="city" value="' . $data['city_en'] . '">' . $data['city_en'] . '</option>';
+  }
+	echo "</select";
+?>	
+	<input type="text" placeholder="Enter Receipent Adress or Hotel Name" name="rec_adress" />
+	<label>Order Information</label>
+	<textarea placeholder="Card Message" class="form-norm" name="cardmessage"></textarea>
+	<label>Sender Information</label>
+	<input type="text" placeholder="Enter Sender Name" name="sen_name" />
+	<input type="text" placeholder="Enter Sender Phone" name="sen_phone" />
+	<input type="text" placeholder="Enter Sender Email" name="sen_email" />
+<input type="hidden" name="price" value="<?php echo $toplamfiyat; ?>" />
+<input type="hidden" name="image" value="<?php echo $img; ?>" />
+<input type="submit" style="width: 100%;" class="webform-submit button-primary form-submit" value="Pay Online via credit card" />
+</form>	
+		
+			
+			
+			
+			
             <?php print render($page['content']); ?>
 
           </section>
@@ -223,5 +269,3 @@
   <!-- End Footer -->
 
 </div>
-
-

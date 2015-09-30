@@ -132,14 +132,6 @@
 
           <section id="post-content" role="main">
 
-            <?php print render($title_prefix); ?>
-            <?php if ($title): ?><h1 class="page-title"><?php print $title; ?></h1><?php endif; ?>
-            <?php if (theme_get_setting('breadcrumbs', 'appco_zymphonies_theme')): ?>
-              <div id="breadcrumbs"> <?php if ($breadcrumb): print $breadcrumb; endif;?> </div>
-            <?php endif; ?>
-
-            <?php print render($title_suffix); ?>
-
             <?php if (!empty($tabs['#primary'])): ?>
               <div class="tabs-wrapper"><?php print render($tabs); ?></div>
             <?php endif; ?>
@@ -149,7 +141,59 @@
             <?php if ($action_links): ?>
               <ul class="action-links"><?php print render($action_links); ?></ul>
             <?php endif; ?>
+		
+<?php
+	$toplamfiyat 	= $_POST['price'];
+	$img 			= $_POST['image'];
+	$rec_name 		= $_POST['rec_name'];
+	$rec_phone 		= $_POST['rec_phone'];
+	$city 			= $_POST['city'];
+	$sen_name 		= $_POST['sen_name'];
+	$sen_phone 		= $_POST['sen_phone'];
+	$sen_email 		= $_POST['sen_email'];
+	$new = "http://turkeyflora.ru/sites/default/files/" . $img;
+	$today = date("md-hi");
+?>	
+<?php
 
+
+$to      = 'ivan@inosov.ru';
+$subject = 'Yeni ORDER';
+$message = "Name: $rec_name \n
+			Phone: $rec_phone \n
+			City: $city \n
+			Sender Name: $sen_name \n
+			Sender Phone: $sen_phone \n
+			Sender Email: $sen_email \n
+			Price: $toplamfiyat \n
+			Buket: $new";
+$headers = 'From: webmaster@inosov.ru' . "\r\n" .
+    'Reply-To: webmaster@inosov.ru' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion();
+
+mail($to, $subject, $message, $headers);
+?> 
+<img src="http://turkeyflora.ru/sites/default/files/<?php echo $img; ?>" style="float: left; width: 120px; height: auto;" />
+<h2>Price: <?php echo $toplamfiyat; ?> TL</h2>		
+<h1>Thank you! Check the information: </h1>
+<p>Receipent Name: <?php echo $rec_name; ?></p>
+<p>Receipent Phone: <?php echo $rec_phone; ?></p>
+<p>City: <?php echo $city; ?></p>
+<p>Sender Name: <?php echo $sen_name; ?></p>
+<p>Sender Phone: <?php echo $sen_phone; ?></p>
+<p>Sender Email: <?php echo $sen_email; ?></p>
+<h1>Credit Card Information</h1>
+
+<form action='http://turkeyflora.ru/payment-2.html' method='post' class='payment'>
+<?php echo t('Card Number'); ?> : <input name='cardnumber' type='text' /><br />
+<?php echo t('Expire Date (month)'); ?> <select name='cardexpiredatemonth'><option value='01'>01</option><option value='02'>02</option><option value='03'>03</option><option value='04'>04</option><option value='05'>05</option><option value='06'>06</option><option value='07'>07</option><option value='08'>08</option><option value='09'>09</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option></select><br />
+<?php echo t('Expire Date (year)'); ?> <select name='cardexpiredateyear'><option value='15'>2015</option><option value='16'>2016</option><option value='17'>2017</option><option value='18'>2018</option><option value='19'>2019</option><option value='21'>2021</option><option value='22'>2022</option><option value='23'>2023</option><option value='24'>2024</option><option value='25'>2025</option><option value='26'>2026</option><option value='27'>2027</option><option value='28'>2028</option><option value='29'>2029</option></select><br />
+<?php echo 'CVV2:'; ?> <input name='cardcvv2' type='text' /><br />
+<input type='hidden' name='IsFormSubmitted' value='submitted' /><br />
+<input name='toplamfiyat2' value=" .<?php echo $toplamfiyat ?>" type='hidden' />
+<input name='order_number' value=" .<?php echo $today ?>" type='hidden' />
+<input id='submit' type='submit' value='Submit' style="width: 100%;" />
+</form>		
             <?php print render($page['content']); ?>
 
           </section>
@@ -223,5 +267,3 @@
   <!-- End Footer -->
 
 </div>
-
-

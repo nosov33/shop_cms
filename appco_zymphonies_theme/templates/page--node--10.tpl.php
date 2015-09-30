@@ -132,14 +132,6 @@
 
           <section id="post-content" role="main">
 
-            <?php print render($title_prefix); ?>
-            <?php if ($title): ?><h1 class="page-title"><?php print $title; ?></h1><?php endif; ?>
-            <?php if (theme_get_setting('breadcrumbs', 'appco_zymphonies_theme')): ?>
-              <div id="breadcrumbs"> <?php if ($breadcrumb): print $breadcrumb; endif;?> </div>
-            <?php endif; ?>
-
-            <?php print render($title_suffix); ?>
-
             <?php if (!empty($tabs['#primary'])): ?>
               <div class="tabs-wrapper"><?php print render($tabs); ?></div>
             <?php endif; ?>
@@ -149,7 +141,86 @@
             <?php if ($action_links): ?>
               <ul class="action-links"><?php print render($action_links); ?></ul>
             <?php endif; ?>
+		
+<?php
+	$toplamfiyat2 	= $_POST['toplamfiyat2'];
+	$order_number 	= $_POST['order_number'];
+?>
+<?php
+		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    		$ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+    		$ip = $_SERVER['REMOTE_ADDR'];
+		}   
+        
+        $strMode = "PROD";
+        $strVersion = "v0.01";
+        $strTerminalID = "1******2";
+        $strTerminalID_ = "01******2"; 
+        $strProvUserID = "PROVAUT";
+        $strProvisionPassword = "******"; 
+        $strUserID = "H******";
+        $strMerchantID = "0*****3"; 
+        $strIPAddress = $ip;  
+        $strEmailAddress = "eticaret@garanti.com.tr";
+        $strOrderID = $order_number;
+        $strInstallmentCnt = ""; 
+        $strNumber = $_POST['cardnumber'];
+        $strExpireDate = $_POST['cardexpiredatemonth'].$_POST['cardexpiredateyear'];
+        $strCVV2 = $_POST['cardcvv2'];
+        $toplamfiyat2 = $_POST['toplamfiyat2'];
+        $strAmount = $toplamfiyat2*100;
+        $strType = "sales";
+        $strCurrencyCode = "949";
+        $strCardholderPresentCode = "0";
+        $strMotoInd = "N";
+        $strHostAddress = "https://sanalposprov.garanti.com.tr/VPServlet";
+        $SecurityData = strtoupper(sha1($strProvisionPassword.$strTerminalID_));
+        $HashData = strtoupper(sha1($strOrderID.$strTerminalID.$strNumber.$strAmount.$SecurityData));
+        $xml= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+        <GVPSRequest>
+        <Mode>$strMode</Mode><Version>$strVersion</Version>
+        <Terminal><ProvUserID>$strProvUserID</ProvUserID><HashData>$HashData</HashData><UserID>$strUserID</UserID><ID>$strTerminalID</ID><MerchantID>$strMerchantID</MerchantID></Terminal>
+        <Customer><IPAddress>$strIPAddress</IPAddress><EmailAddress>$strEmailAddress</EmailAddress></Customer>
+        <Card><Number>$strNumber</Number><ExpireDate>$strExpireDate</ExpireDate><CVV2>$strCVV2</CVV2></Card>
+        <Order><OrderID>$strOrderID</OrderID><GroupID></GroupID><AddressList><Address><Type>S</Type><Name></Name><LastName></LastName><Company></Company><Text></Text><District></District><City></City><PostalCode></PostalCode><Country></Country><PhoneNumber></PhoneNumber></Address></AddressList></Order><Transaction><Type>$strType</Type><InstallmentCnt>$strInstallmentCnt</InstallmentCnt><Amount>$strAmount</Amount><CurrencyCode>$strCurrencyCode</CurrencyCode><CardholderPresentCode>$strCardholderPresentCode</CardholderPresentCode><MotoInd>$strMotoInd</MotoInd><Description></Description><OriginalRetrefNum></OriginalRetrefNum></Transaction>
+        </GVPSRequest>";
+        If ($_POST['IsFormSubmitted'] == ""){
+        	}
+        else {
+	        $ch=curl_init();
+	        curl_setopt($ch, CURLOPT_URL, $strHostAddress);
+	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	        curl_setopt($ch, CURLOPT_POST, 1) ;
+	        curl_setopt($ch, CURLOPT_POSTFIELDS, "data=".$xml);
+	        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	        $results = curl_exec($ch);
+	        curl_close($ch);
+	        $xml_parser = xml_parser_create();
+	        xml_parse_into_struct($xml_parser,$results,$vals,$index);
+	        xml_parser_free($xml_parser);
+	        //Sadece ReasonCode deðerini alýyoruz.
+	        $strReasonCodeValue = $vals[$index['REASONCODE'][0]]['value'];
+	        if($strReasonCodeValue == "00")
+	        { 
+	            echo "<div class='mistake'><div class='container'>Thank You! Money has been sent!</div></div>";
+	           	 	$to      = 'ivan@inosov.ru';
+					$subject = 'ORDER number $today was payed';
+					$message = "Check your Bank please!";
+					$headers = 'From: webmaster@inosov.ru' . "\r\n" .
+					    'Reply-To: webmaster@inosov.ru' . "\r\n" .
+					    'X-Mailer: PHP/' . phpversion();
 
+					mail($to, $subject, $message, $headers);
+	        } else {
+	            echo "<div class='mistake'><div class='container'>Eror! Please, contact with info@***.ru</div></div>"; 
+	        }
+		}
+?>
+	
             <?php print render($page['content']); ?>
 
           </section>
@@ -223,5 +294,3 @@
   <!-- End Footer -->
 
 </div>
-
-
