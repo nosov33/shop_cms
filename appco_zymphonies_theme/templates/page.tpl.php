@@ -100,19 +100,6 @@
       <?php endif; ?>
   </header>
 
-  <div class="front-blocks">
-    <?php if ($is_front): ?>
-      <div class="frontblockwrap">
-        <?php print render($page['aboutus']); ?>
-      </div>
-
-      <div class="frontblockwrap whowewrap">
-        <?php print render($page['whoweare']); ?>
-        <?php print render($page['whatwedo']); ?> 
-      </div>
-    <?php endif; ?>
-  </div>
-
 
   <div class="content-wrap">
 
@@ -168,6 +155,18 @@
 
       <!-- End Second Sidebar -->
 
+  </div>
+  <div class="front-blocks">
+    <?php if ($is_front): ?>
+      <div class="frontblockwrap">
+        <?php print render($page['aboutus']); ?>
+      </div>
+
+      <div class="frontblockwrap whowewrap">
+        <?php print render($page['whoweare']); ?>
+        <?php print render($page['whatwedo']); ?> 
+      </div>
+    <?php endif; ?>
   </div>
 
   <!-- Footer -->
