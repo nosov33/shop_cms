@@ -98,6 +98,12 @@
           </a>
         </div>
       <?php endif; ?>
+      <div class="right">
+      	<?php echo t('Contact Phones:'); ?><br />
+      	Russian: +90 531 611 2029<br />
+      	English: +90 506 570 2613<br />
+      	Turkish: +90 532 522 5042<br />
+      </div>
   </header>
 
 

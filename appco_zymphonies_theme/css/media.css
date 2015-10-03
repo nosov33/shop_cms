@@ -98,6 +98,15 @@
     top:0;
     width:100%;
   }
+  header.siteheader .right{
+  	display: none;
+  }
+  	  header.siteheader {
+	  	text-align: center;
+	  }
+	  #logo {
+	  	float: none!important;
+	  }
   .staticmenu .menu-navigation-container{
     height:100%;
     margin-right:-18px;
@@ -209,4 +218,10 @@
 }
 
 @media screen and (max-width: 440px){
+	  header.siteheader .right{
+	  	display: none;
+	  }
+	  header.siteheader {
+	  	text-align: center;
+	  }
 }
