@@ -208,7 +208,7 @@
 	        { 
 	            echo "<div class='mistake'><div class='container'>Thank You! Money has been sent!</div></div>";
 	           	 	$to      = 'ivan@inosov.ru';
-					$subject = 'ORDER number $today was payed';
+					$subject = 'ORDER number $today has been payed';
 					$message = "Check your Bank please!";
 					$headers = 'From: webmaster@inosov.ru' . "\r\n" .
 					    'Reply-To: webmaster@inosov.ru' . "\r\n" .

@@ -11,6 +11,16 @@
                 info@zymphonies.com
 
 -----------------------------------------------*/
+.views-exposed-form .views-exposed-widget {
+  float: left;
+  padding: .5em 1em 0 0;
+  width: 100%;
+}
+select#edit-field-category-value-i18n{
+	width: 100%;
+	padding: 10px 5px;
+}
+
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -963,7 +973,8 @@ li.node-readmore {
 	margin-right: 15px;
 }
 .not-front .node-flora .field-name-field-price {
-	font-size: 35px;
+	font-size: 25px;
+	margin: 7px 0;
 	
 }
 textarea.form-norm {
@@ -1109,7 +1120,7 @@ select.form-norm {
 .not-front header.siteheader {
   font-size:12px;
   margin:0;
-  padding:10px 0;
+  padding: 30px 15px;
   height: 260px;
   background: url("../images/logo_bg.gif") top left repeat-x;
 }
