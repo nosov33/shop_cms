@@ -105,10 +105,12 @@
       	Turkish: +90 532 522 5042<br />
       </div>
   </header>
+<?php if ($page['mega_menu']): ?>
+<?php print render($page['mega_menu']); ?>
+<?php endif; ?>
 
 
   <div class="content-wrap">
-
       <div class="content-sidebar-wrap">
 
         <!-- First Sidebar -->

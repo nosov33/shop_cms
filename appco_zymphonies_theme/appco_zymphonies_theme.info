@@ -11,6 +11,7 @@ stylesheets[all][] = css/media.css
 scripts[] = js/custom.js
 
 regions[user_menu]  	= User menu
+regions[mega_menu]  	= Mega menu
 regions[aboutus]       	= About us
 regions[whoweare]     	= Who we are
 regions[whatwedo]       = What we do

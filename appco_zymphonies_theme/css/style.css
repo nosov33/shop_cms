@@ -291,7 +291,7 @@ aside header {
   float:left;
   margin:10px;
   padding:15px;
-  width:31.2%;
+  width:23.4%;
 }
 .region-content .article2 {
   background:#FFF;
@@ -299,12 +299,22 @@ aside header {
   float:left;
   margin:10px;
   padding:15px;
-  width:31%;
+  width:23%;
+}
+.region-content .article2 h2{
+	font-size: 14px!important;
+}
+.views-exposed-form .form-type-bef-link {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-top: 1px solid #000;
+  padding: 5px 10px;
+  background-color: #fff;
 }
 header.siteheader {
   font-size:26px;
   padding:30px 15px;
-    height: 260px;
+  height: 260px;
   background: url("../images/logo_bg.gif") top left repeat-x;
 }
 #logo {
