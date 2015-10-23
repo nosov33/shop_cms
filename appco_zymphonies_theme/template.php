@@ -1,5 +1,16 @@
 <?php
 /**
+ * Implements hook_preprocess_node().
+ */
+function appco_zymphonies_theme_process_node(&$vars) {
+  // Change default text of the read more link.
+  if (isset($vars['links']['node']['#links']['node-readmore'])) {
+    $vars['links']['node']['#links']['node-readmore']['title'] = t('Buy NOW');
+  }
+}
+
+$conf['default_nodes_main'] = 16;
+/**
  * Implements hook_html_head_alter().
  * This will overwrite the default meta character type tag with HTML5 version.
  */

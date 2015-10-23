@@ -16,11 +16,53 @@
   padding: .5em 1em 0 0;
   width: 100%;
 }
-select#edit-field-category-value-i18n{
+select#edit-category{
 	width: 100%;
 	padding: 10px 5px;
 }
 
+.clear {
+	clear: both;
+}
+
+form.payment, .check_info {
+	margin: 0 auto;
+	max-width: 500px;
+	padding: 25px; 
+	background: url(../images/body-bg.png);
+	border: 3px solid #22B322;
+}
+.check_info {
+	max-width: 1000px;
+	margin-bottom: 15px;
+}
+form.payment select,
+form.payment input {
+	width: 50%;
+	float: right;
+    padding: 5px;
+}
+form.payment input[type="submit"],
+form.new_payment input[type="submit"] {
+	padding: 10px;
+}
+form.new_payment {
+	margin: 0 auto;
+	max-width: 800px;
+	padding: 25px; 
+	background: url(../images/body-bg.png);
+	border: 3px solid #22B322;
+}
+form.new_payment input {
+	width: 100%;
+    padding: 5px;
+}
+form.new_payment select {
+	width: 50%;
+	float: left;
+    padding: 5px;
+    margin-bottom: 5px;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

@@ -151,7 +151,7 @@
 	$sen_name 		= $_POST['sen_name'];
 	$sen_phone 		= $_POST['sen_phone'];
 	$sen_email 		= $_POST['sen_email'];
-	$new = "http://turkeyflora.ru/sites/default/files/" . $img;
+	$new = "https://turkeyflora.ru/sites/default/files/" . $img;
 	$today = date("md-hi");
 ?>	
 <?php
@@ -173,27 +173,74 @@ $headers = 'From: webmaster@inosov.ru' . "\r\n" .
 
 mail($to, $subject, $message, $headers);
 ?> 
-<img src="http://turkeyflora.ru/sites/default/files/<?php echo $img; ?>" style="float: left; width: 120px; height: auto;" />
-<h2>Price: <?php echo $toplamfiyat; ?> TL</h2>		
+
 <h1>Thank you! Check the information: </h1>
+<div class="check_info">
+<img src="https://turkeyflora.ru/sites/default/files/styles/teaser/public/<?php echo $img; ?>" style="float: right; width: 200px; height: auto;" />
+
 <p>Receipent Name: <?php echo $rec_name; ?></p>
 <p>Receipent Phone: <?php echo $rec_phone; ?></p>
 <p>City: <?php echo $city; ?></p>
 <p>Sender Name: <?php echo $sen_name; ?></p>
 <p>Sender Phone: <?php echo $sen_phone; ?></p>
 <p>Sender Email: <?php echo $sen_email; ?></p>
+</div>
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Credit Card Payment</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Pay via Paypal</a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Pay via Western Union</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
 <h1>Credit Card Information</h1>
 
-<form action='http://turkeyflora.ru/payment-2.html' method='post' class='payment'>
-<?php echo t('Card Number'); ?> : <input name='cardnumber' type='text' /><br />
-<?php echo t('Expire Date (month)'); ?> <select name='cardexpiredatemonth'><option value='01'>01</option><option value='02'>02</option><option value='03'>03</option><option value='04'>04</option><option value='05'>05</option><option value='06'>06</option><option value='07'>07</option><option value='08'>08</option><option value='09'>09</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option></select><br />
-<?php echo t('Expire Date (year)'); ?> <select name='cardexpiredateyear'><option value='15'>2015</option><option value='16'>2016</option><option value='17'>2017</option><option value='18'>2018</option><option value='19'>2019</option><option value='21'>2021</option><option value='22'>2022</option><option value='23'>2023</option><option value='24'>2024</option><option value='25'>2025</option><option value='26'>2026</option><option value='27'>2027</option><option value='28'>2028</option><option value='29'>2029</option></select><br />
+<form action='https://turkeyflora.ru/payment-2.html' method='post' class='payment'>
+<h2>Price: <?php echo $toplamfiyat; ?> TL</h2>	
+<?php echo t('Card Number'); ?> : <input name='cardnumber' type='text' /><br /><br />
+<?php echo t('Expire Date (month)'); ?> <select name='cardexpiredatemonth'><option value='01'>01</option><option value='02'>02</option><option value='03'>03</option><option value='04'>04</option><option value='05'>05</option><option value='06'>06</option><option value='07'>07</option><option value='08'>08</option><option value='09'>09</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option></select><br /><br />
+<?php echo t('Expire Date (year)'); ?> <select name='cardexpiredateyear'><option value='15'>2015</option><option value='16'>2016</option><option value='17'>2017</option><option value='18'>2018</option><option value='19'>2019</option><option value='21'>2021</option><option value='22'>2022</option><option value='23'>2023</option><option value='24'>2024</option><option value='25'>2025</option><option value='26'>2026</option><option value='27'>2027</option><option value='28'>2028</option><option value='29'>2029</option></select><br /><br />
 <?php echo 'CVV2:'; ?> <input name='cardcvv2' type='text' /><br />
 <input type='hidden' name='IsFormSubmitted' value='submitted' /><br />
 <input name='toplamfiyat2' value=" .<?php echo $toplamfiyat ?>" type='hidden' />
 <input name='order_number' value=" .<?php echo $today ?>" type='hidden' />
-<input id='submit' type='submit' value='Submit' style="width: 100%;" />
-</form>		
+<input id='submit' type='submit' value='Submit' style="width: 100%;" /><br />
+</form>		    	
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="floristturkey@gmail.com">
+    <input type="hidden" name="item_name" value="Donation">
+    <input type="hidden" name="item_number" value="1">
+    <input type="hidden" name="amount" value="<?php echo $toplamfiyat ?>.00">
+    <input type="hidden" name="no_shipping" value="0">
+    <input type="hidden" name="no_note" value="1">
+    <input type="hidden" name="currency_code" value="USD">
+    <input type="hidden" name="lc" value="EN">
+    <input type="hidden" name="bn" value="PP-BuyNowBF">
+    <input type="image" src="https://www.paypal.com/en_AU/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+    <img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1">
+</form>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="messages">
+    	Western Union<br />
+    	07400<br />
+    	Antalya, Alanya<br />
+    	Fatih Öztürk<br /><br />
+    	<p class="bg-warning"><br /><center><b>After the payment please send scan winth Control Number to info@turkeyflora.ru</b></center><br /><br class="clear" /></p>
+    </div>
+  </div>
+
+</div>
+<!-- Bootstrap Core JavaScript -->
+    <script src="https://turkeyflora.ru/sites/all/themes/appco_zymphonies_theme/js/bootstrap.min.js"></script>
+
             <?php print render($page['content']); ?>
 
           </section>
